@@ -210,14 +210,16 @@ class _RoundIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return ElevatedButton(
         child: Icon(
             icon,
             color: Colors.white
         ),
-        padding: EdgeInsets.all(16.0),
-        color: Colors.blue,
-        shape: CircleBorder(),
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(16.0),
+          backgroundColor: Colors.blue,
+          shape: CircleBorder(),
+        ),
         onPressed: onPressed
     );
   }
