@@ -1,1 +1,37 @@
+pluginManagement {
+    def flutterSdkPath = {
+        def properties = new Properties()
+        def localPropertiesFile = new File(rootProject.projectDir, 'local.properties')
+        if (localPropertiesFile.exists()) {
+            localPropertiesFile.withReader('UTF-8') { reader ->
+                properties.load(reader)
+            }
+        }
+        properties.getProperty('flutter.sdk')
+    }()
+    if (flutterSdkPath == null) {
+        throw new GradleException('flutter.sdk not set in local.properties')
+    }
+
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        file("$flutterSdkPath/packages/flutter_tools/gradle")
+    }
+
+    plugins {
+        id 'com.android.library'
+        id 'org.jetbrains.kotlin.android'
+        id 'dev.flutter.flutter-plugin-loader'
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
 rootProject.name = 'flutter_cast_video'

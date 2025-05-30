@@ -1,0 +1,5 @@
+<resources>
+    <style name="Theme.AppCompat.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize if needed -->
+    </style>
+</resources>

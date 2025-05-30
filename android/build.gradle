@@ -1,47 +1,68 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android' version '1.9.24'
+}
+
 group 'it.aesys.flutter_cast_video'
 version '1.2-ENABLEMEDIA'
 
-buildscript {
-    ext.kotlinVersion = "1.5.31"
-    ext.gradleVersion = "4.1.0"
-    repositories {
-        google()
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    }
-}
-
-rootProject.allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
-
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-
 android {
-    compileSdkVersion 34
+    namespace 'it.aesys.flutter_cast_video'
+    compileSdk 34
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
     defaultConfig {
-        minSdkVersion 25
+        minSdk 25
     }
-    lintOptions {
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
+    }
+
+    lint {
         disable 'InvalidPackage'
+        disable 'ResourceCycle' // Suppress ResourceCycle error
     }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    //ChromeCast dependencies
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.22"
+    // ChromeCast dependencies
     implementation 'com.google.android.material:material:1.6.1'
-    implementation 'com.google.android.gms:play-services-cast-framework:21.0.1'
+    implementation 'com.google.android.gms:play-services-cast-framework:21.5.0'
+}
+
+def localPropertiesFile = new File(rootProject.projectDir, 'local.properties')
+def properties = new Properties()
+
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        properties.load(reader)
+    }
+}
+
+def flutterProjectRoot = properties.getProperty('flutter.project.root') ?: rootProject.projectDir
+def plugins = new Properties()
+def pluginsFile = new File(flutterProjectRoot, '.flutter-plugins')
+if (pluginsFile.exists()) {
+    pluginsFile.withReader('UTF-8') { reader ->
+        plugins.load(reader)
+    }
+}
+
+dependencies {
+    plugins.each { name, path ->
+        def pluginDirectory = file(path)
+        implementation project(":${name}")
+    }
 }
