@@ -24,6 +24,7 @@ import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.platform.PlatformView
+import androidx.appcompat.R
 
 
 class ChromeCastController(
@@ -38,6 +39,8 @@ class ChromeCastController(
     init {
         CastButtonFactory.setUpMediaRouteButton(context as Context, chromeCastButton)
         channel.setMethodCallHandler(this)
+        // Set a solid background color programmatically to avoid translucent error
+        chromeCastButton.setBackgroundColor(0xFF000000.toInt()) // Solid black
     }
 
     private fun loadMedia(args: Any?) {
@@ -56,7 +59,6 @@ class ChromeCastController(
             movieMetadata.putString(MediaMetadata.KEY_TITLE, title)
             movieMetadata.putString(MediaMetadata.KEY_SUBTITLE, subtitle)
             movieMetadata.addImage(WebImage(Uri.parse(imageUrl)))
-            //movieMetadata.addImage(WebImage(Uri.parse(imageUrl)))
 
             val media = MediaInfo
                             .Builder(url)
@@ -207,7 +209,8 @@ class ChromeCastController(
     override fun getView() = chromeCastButton
 
     override fun dispose() {
-
+        removeSessionListener()
+        channel.setMethodCallHandler(null)
     }
 
     // Flutter methods handling

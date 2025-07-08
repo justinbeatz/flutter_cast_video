@@ -8,7 +8,7 @@ version '1.2-ENABLEMEDIA'
 
 android {
     namespace 'it.aesys.flutter_cast_video'
-    compileSdk 34
+    compileSdk 35
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'

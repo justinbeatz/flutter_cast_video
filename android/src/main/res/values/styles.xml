@@ -1,5 +1,6 @@
 <resources>
     <style name="Theme.AppCompat.NoActionBar" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize if needed -->
+        <item name="colorPrimary">@color/bluePrimary</item>"
     </style>
 </resources>

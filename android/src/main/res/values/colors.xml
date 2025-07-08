@@ -1,0 +1,4 @@
+<resources>
+    <color name="solid_color">#FF000000</color> <!-- Solid black -->
+    <color name="bluePrimary">#FFF5F5F5</color><!-- Solid blue -->
+</resources>
