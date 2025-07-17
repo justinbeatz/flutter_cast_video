@@ -35,7 +35,7 @@ android {
     defaultConfig {
         applicationId "it.aesys.flutter_cast_video_example"
         minSdk 25
-        targetSdk 34
+        targetSdk 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true

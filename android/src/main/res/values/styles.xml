@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.AppCompat.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+    <style name="ChromeCastTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize if needed -->
         <item name="colorPrimary">@color/bluePrimary</item>"
     </style>

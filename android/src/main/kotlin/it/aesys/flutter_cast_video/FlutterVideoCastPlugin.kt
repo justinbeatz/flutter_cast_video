@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-// import io.flutter.plugin.common.PluginRegistry.Registrar
 
 /** FlutterVideoCastPlugin */
 public class FlutterVideoCastPlugin: FlutterPlugin, ActivityAware {
@@ -47,6 +46,7 @@ public class FlutterVideoCastPlugin: FlutterPlugin, ActivityAware {
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
     chromeCastFactory.activity = binding.activity
+      println("ChromeCastButton context: ${binding.activity.javaClass.name}")
   }
 
   override fun onDetachedFromActivityForConfigChanges() {
