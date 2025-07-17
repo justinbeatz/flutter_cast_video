@@ -30,12 +30,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_cast_video/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_cast_video: f9643cc5e5a77e72cb4445c0c750f8776fbf7395
   google-cast-sdk-no-bluetooth: d5a60530c72b0907fb302d835952b6cb0ba5f128
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
   Protobuf: 2793fcd0622a00b546c60e7cbbcc493e043e9bb9
 
-PODFILE CHECKSUM: 5870d1a86cd3531ab0f2db0fd4df716cce679cab
+PODFILE CHECKSUM: d23e0af0fc62d7da5c239e5980299a5c5e16acf3
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.16.2

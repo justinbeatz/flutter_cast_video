@@ -2,7 +2,7 @@ import UIKit
 import Flutter
 import GoogleCast
 
-@UIApplicationMain
+@main
 @objc class AppDelegate: FlutterAppDelegate, GCKLoggerDelegate {
     let kReceiverAppID = kGCKDefaultMediaReceiverApplicationID
     let kDebugLoggingEnabled = true
