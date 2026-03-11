@@ -13,9 +13,10 @@ A new flutter plugin project.
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  # s.source_files = 'Classes/**/*'
+  s.source_files = 'flutter_cast_video/Sources/flutter_cast_video/**/*.swift', 'flutter_cast_video/Sources/flutter_cast_video/**/*.m'
   s.dependency 'Flutter'
-  s.dependency 'google-cast-sdk-no-bluetooth'
+  s.dependency 'google-cast-sdk'
   s.platform = :ios, '11.0'
   s.static_framework = true
 
