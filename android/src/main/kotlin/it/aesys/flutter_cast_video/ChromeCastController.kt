@@ -1,6 +1,8 @@
 package it.aesys.flutter_cast_video
 
 import android.content.Context
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import android.util.Log
 import android.net.Uri
 import android.view.ContextThemeWrapper
@@ -30,7 +32,8 @@ import androidx.appcompat.R
 class ChromeCastController(
         messenger: BinaryMessenger,
         viewId: Int,
-        context: Context?
+        context: Context?,
+        private val creationParams: Map<*, *>?
 ) : PlatformView, MethodChannel.MethodCallHandler, SessionManagerListener<Session>, PendingResult.StatusListener {
     private val channel = MethodChannel(messenger, "flutter_cast_video/chromeCast_$viewId")
     private val chromeCastButton = MediaRouteButton(ContextThemeWrapper(context, R.style.Theme_AppCompat_NoActionBar))
@@ -40,7 +43,36 @@ class ChromeCastController(
         CastButtonFactory.setUpMediaRouteButton(context as Context, chromeCastButton)
         channel.setMethodCallHandler(this)
         // Set a solid background color programmatically to avoid translucent error
-        chromeCastButton.setBackgroundColor(0xFF000000.toInt()) // Solid black
+        // chromeCastButton.setBackgroundColor(0xFF000000.toInt()) // Solid black
+        // this comes from the flutter side as the color property in ChromeCastButton
+        val bgR = (creationParams?.get("bgRed") as? Int) ?: 0
+        val bgG = (creationParams?.get("bgGreen") as? Int) ?: 0
+        val bgB = (creationParams?.get("bgBlue") as? Int) ?: 0
+        val bgA = (creationParams?.get("bgAlpha") as? Int) ?: 255
+        chromeCastButton.setBackgroundColor(android.graphics.Color.argb(bgA, bgR, bgG, bgB))
+
+        val iconR = (creationParams?.get("iconRed") as? Int) ?: 0
+        val iconG = (creationParams?.get("iconGreen") as? Int) ?: 0
+        val iconB = (creationParams?.get("iconBlue") as? Int) ?: 0
+        val iconA = (creationParams?.get("iconAlpha") as? Int) ?: 255
+        val iconColor = android.graphics.Color.argb(iconA, iconR, iconG, iconB)
+
+        chromeCastButton.post {
+            try {
+                val field = MediaRouteButton::class.java.getDeclaredField("mRemoteIndicator")
+                field.isAccessible = true
+                val indicator = field.get(chromeCastButton) as? android.graphics.drawable.Drawable
+                android.util.Log.d("ChromeCast", "indicator: $indicator")
+                indicator?.let {
+                    val wrapped = DrawableCompat.wrap(it.mutate())
+                    DrawableCompat.setTint(wrapped, iconColor)
+                    chromeCastButton.setRemoteIndicatorDrawable(wrapped)
+                    android.util.Log.d("ChromeCast", "Tint applied: $iconColor")
+                } ?: android.util.Log.e("ChromeCast", "indicator is null after post")
+            } catch (e: Exception) {
+                android.util.Log.e("ChromeCast", "Reflection failed: ${e.message}")
+            }
+        }
     }
 
     private fun loadMedia(args: Any?) {

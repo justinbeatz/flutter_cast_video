@@ -17,7 +17,8 @@ class ChromeCastButton extends StatelessWidget {
   ChromeCastButton({
     Key? key,
     this.size = 30.0,
-    this.color = Colors.black,
+    this.color = Colors.white,
+    this.backgroundColor = Colors.black,
     this.onButtonCreated,
     this.onSessionStarted,
     this.onSessionEnded,
@@ -36,6 +37,8 @@ class ChromeCastButton extends StatelessWidget {
   /// The color of the button.
   /// This is only supported on iOS at the moment.
   final Color color;
+
+  final Color backgroundColor;
 
   /// Callback method for when the button is ready to be used.
   ///
@@ -60,10 +63,14 @@ class ChromeCastButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> args = {
-      'red': color.red,
-      'green': color.green,
-      'blue': color.blue,
-      'alpha': color.alpha
+      'bgRed': backgroundColor.red,
+      'bgGreen': backgroundColor.green,
+      'bgBlue': backgroundColor.blue,
+      'bgAlpha': backgroundColor.alpha,
+      'iconRed': color.red,
+      'iconGreen': color.green,
+      'iconBlue': color.blue,
+      'iconAlpha': color.alpha,
     };
     return SizedBox(
       width: size,
